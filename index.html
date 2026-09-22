@@ -16,41 +16,15 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!--
-    ============================================================
-    ÍNDICE DE LA PÁGINA (para ubicarte rápido al editar)
-    ============================================================
-    1. Logos flotantes de las esquinas (siempre visibles)
-    2. <header class="hero">                  → Portada, #
-    3. <section id="carta">                   → Carta con sobre
-    4. <section id="momentos">                → Galería de fotos
-    5. <section id="flores-amarillas">        → Flores amarillas
-    6. <footer>                               → Pie de página
-
-    Cada sección tiene, si aplica, un "apartado de imágenes"
-    (<div class="imagenes-libres">) para sumar stickers o fotos
-    sueltas cerca de su título sin romper nada (ver el comentario
-    completo dentro de la portada, más abajo).
-
-    Los textos pensados para que edites con tus propias palabras
-    están marcados como {Tu Nombre} o en los <p> de la carta y
-    de las flores amarillas.
-    ============================================================
-  -->
-
-  <!-- Fondos decorativos que arma script.js: primero las nubes (más al fondo), después los pétalos (más adelante) -->
   <div id="cloud-field" aria-hidden="true"></div>
   <div id="petal-field" aria-hidden="true"></div>
 
-  <!-- Logos fijos en las esquinas. Se agrandan al pasar el mouse y suenan al tocarlos.
-       Al ser "position: fixed" no le quitan ni le dan espacio a nada más de la página. -->
-  <button class="corner-logo corner-logo--top-left" type="button" aria-label="Osito y osita con flores">
-    <img src="images/corazon-bubududu.png" alt="Osito y osita con flores" width="944" height="652" data-mover="logo-superior-izquierda">
+  <button class="corner-logo corner-logo--top-left" type="button" aria-label="Osito y osita con corazón">
+    <img src="images/corazon-bubududu.png" alt="Osito y osita con corazón" width="944" height="652" data-mover="logo-superior-izquierda">
   </button>
   <button class="corner-logo corner-logo--bottom-right" type="button" aria-label="Kuromi y My Melody">
     <img src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435" data-mover="logo-inferior-derecha">
   </button>
-
   <!-- ===== PORTADA ===== -->
   <header class="hero">
     <div class="imagenes-libres">
@@ -68,7 +42,6 @@
   <section class="letter-section" id="carta">
     <div class="wrap wrap--narrow">
 
-      <!-- APARTADO DE IMÁGENES de esta sección (ver nota completa en el hero, arriba) -->
       <div class="imagenes-libres">
         <img class="img-libre carta__sticker" src="images/mocha-romantico.gif" alt="Osito con flores" width="300" height="300" loading="lazy" data-mover="carta-sticker">
       </div>
@@ -144,7 +117,6 @@
     </div>
   </section>
 
-  <!-- ===== FLORES AMARILLAS ===== -->
   <section class="yellow-section" id="flores-amarillas">
     <div class="wrap">
       <h2 class="section-title section-title--yellow">Tus flores amarillas</h2>
@@ -158,20 +130,19 @@
     </div>
   </section>
 
-  <!-- ===== PIE DE PÁGINA ===== -->
+
   <footer>
 
     <svg class="footer__flourish" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 15 C40 0, 80 0, 115 15" stroke="#e0578f" stroke-width="1.2" fill="none" opacity="0.6"/>
     </svg>
-
-    <!-- APARTADO DE IMÁGENES de esta sección (ver nota completa en el hero, arriba) -->
     <div class="imagenes-libres">
       <img class="img-libre footer__sticker" src="images/mi-osita.gif" alt="Osito leyendo con osita" width="370" height="300" loading="lazy" data-mover="footer-sticker">
     </div>
 
     <p class="footer__from">Con cariño, Euge</p>
     <p class="footer__date">21 de septiembre — Día de la Primavera</p>
+
   </footer>
 
   <script src="script.js"></script>

@@ -1,28 +1,3 @@
-/*
-  Comportamiento principal de la página: sonidos de los logos, la
-  carta que se abre (con su gif sorpresa), el aviso de fotos que
-  faltan, y los adornos que se dibujan por código (margaritas,
-  nubes, pétalos).
-
-  Cada bloque de acá abajo es independiente: se puede leer, tocar
-  o borrar uno sin afectar a los demás.
-*/
-
-
-/* ============================================================
-   AYUDA COMPARTIDA
-   ============================================================ */
-
-/**
- * Dice si la persona que ve la página pidió "reducir movimiento"
- * en las preferencias de su sistema operativo.
- * @returns {boolean}
- */
-function prefiereMenosMovimiento() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-
 /* ============================================================
    SONIDO DE LOS LOGOS
    Cada logo de esquina tiene un audio propio. Tocarlo lo reproduce
@@ -59,75 +34,19 @@ document.querySelector('.corner-logo--top-left')
 
 document.querySelector('.corner-logo--bottom-right')
   .addEventListener('click', () => alTocarLogo(sonidoLogoDerecha));
-
-
-/* ============================================================
-   SORPRESA DE LA CARTA
-   El gif del osito solo debería animarse mientras está a la
-   vista. Si en vez de eso se deja un <img> fijo en el HTML y
-   se lo muestra/oculta con opacidad, algunos navegadores lo
-   pausan mientras está invisible y, al volver a mostrarlo, se ve
-   como una foto quieta en vez de seguir animando.
-
-   Para evitarlo, la imagen NO vive en el HTML: se crea recién
-   cuando la carta se abre (así el navegador la decodifica de
-   cero y arranca la animación desde el primer cuadro) y se borra
-   del todo cuando termina de ocultarse.
-   ============================================================ */
-
-const RUTA_GIF_SORPRESA = 'images/mocha-love.webp';
-const DURACION_GIF_VISIBLE_MS = 3500;
-
-const envoltorioGifSorpresa = document.querySelector('.letter__gif-wrap');
-
-/**
- * Crea el osito sorpresa dentro de la carta y lo hace aparecer
- * con una transición. Si ya había uno de una apertura anterior,
- * lo reemplaza.
- */
-function mostrarGifSorpresa() {
-  envoltorioGifSorpresa.querySelector('.letter__gif')?.remove();
-
-  const gif = document.createElement('img');
-  gif.src = RUTA_GIF_SORPRESA;
-  gif.alt = '';
-  gif.width = 370;
-  gif.height = 300;
-  gif.className = 'letter__gif';
-  envoltorioGifSorpresa.appendChild(gif);
-
-  requestAnimationFrame(() => gif.classList.add('letter__gif--visible'));
-
-  setTimeout(ocultarGifSorpresa, DURACION_GIF_VISIBLE_MS);
-}
-
-/**
- * Hace desaparecer el osito sorpresa con una transición y, una
- * vez terminada, lo borra del documento.
- */
-function ocultarGifSorpresa() {
-  const gif = envoltorioGifSorpresa.querySelector('.letter__gif');
-  if (!gif) return;
-
-  gif.classList.remove('letter__gif--visible');
-  gif.addEventListener('transitionend', () => gif.remove(), { once: true });
-}
+/* ==========================
+   SOBRE / CARTA
+   Al tocar el sobre, se abre o cierra la carta.
+========================== */
 
 const botonSobre = document.getElementById('envelope-btn');
-const escenarioCarta = document.getElementById('letter-box');
+const cajaCarta = document.getElementById('letter-box');
 
 botonSobre.addEventListener('click', () => {
-  const estaAbierta = escenarioCarta.classList.toggle('letter--open');
+  const estaAbierta = cajaCarta.classList.toggle('letter--open');
   botonSobre.setAttribute('aria-expanded', estaAbierta);
-
-  if (estaAbierta) {
-    mostrarGifSorpresa();
-  } else {
-    ocultarGifSorpresa();
-  }
 });
-
-/* ============================================================
+/*===========================================================
    MARGARITAS
    Dibuja una margarita amarilla en SVG por cada tamaño de la
    lista, para la fila de flores amarillas.
@@ -164,12 +83,7 @@ TAMANIOS_MARGARITAS.forEach((tamanio) => {
 });
 
 
-/* ============================================================
-   NUBES DE FONDO
-   Nubes rosadas clarito que se mueven lento de izquierda a
-   derecha. No se dibuja ninguna si la persona pidió reducir
-   movimiento.
-   ============================================================ */
+/*NUBES DE FONDO*/
 
 const CANTIDAD_NUBES = 9;
 
@@ -210,18 +124,14 @@ function agregarNubeAlAzar(contenedor) {
 }
 
 const contenedorNubes = document.getElementById('cloud-field');
-
-if (contenedorNubes && !prefiereMenosMovimiento()) {
   for (let i = 0; i < CANTIDAD_NUBES; i++) {
     agregarNubeAlAzar(contenedorNubes);
   }
-}
+
 
 
 /* ============================================================
    PÉTALOS QUE CAEN
-   Igual que las nubes: no se dibuja ninguno si la persona pidió
-   reducir movimiento.
    ============================================================ */
 
 const CANTIDAD_PETALOS = 14;
@@ -247,9 +157,6 @@ function agregarPetaloAlAzar(contenedor) {
 }
 
 const contenedorPetalos = document.getElementById('petal-field');
-
-if (contenedorPetalos && !prefiereMenosMovimiento()) {
-  for (let i = 0; i < CANTIDAD_PETALOS; i++) {
-    agregarPetaloAlAzar(contenedorPetalos);
-  }
+for (let i = 0; i < CANTIDAD_PETALOS; i++) {
+  agregarPetaloAlAzar(contenedorPetalos);
 }
