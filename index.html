@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Feliz Día de la Primavera, Tiara — una cartita interactiva con fotos, sorpresas y flores.">
+  <title>Feliz Día de la Primavera</title>
+
+  <link rel="icon" href="images/icon.png" type="image/png">
+
+  <!-- Fuentes: una para títulos (más elegante) y otra para el texto normal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    ============================================================
+    ÍNDICE DE LA PÁGINA (para ubicarte rápido al editar)
+    ============================================================
+    1. Logos flotantes de las esquinas (siempre visibles)
+    2. <header class="hero">                  → Portada, #
+    3. <section id="carta">                   → Carta con sobre
+    4. <section id="momentos">                → Galería de fotos
+    5. <section id="flores-amarillas">        → Flores amarillas
+    6. <footer>                               → Pie de página
+
+    Cada sección tiene, si aplica, un "apartado de imágenes"
+    (<div class="imagenes-libres">) para sumar stickers o fotos
+    sueltas cerca de su título sin romper nada (ver el comentario
+    completo dentro de la portada, más abajo).
+
+    Los textos pensados para que edites con tus propias palabras
+    están marcados como {Tu Nombre} o en los <p> de la carta y
+    de las flores amarillas.
+    ============================================================
+  -->
+
+  <!-- Fondos decorativos que arma script.js: primero las nubes (más al fondo), después los pétalos (más adelante) -->
+  <div id="cloud-field" aria-hidden="true"></div>
+  <div id="petal-field" aria-hidden="true"></div>
+
+  <!-- Logos fijos en las esquinas. Se agrandan al pasar el mouse y suenan al tocarlos.
+       Al ser "position: fixed" no le quitan ni le dan espacio a nada más de la página. -->
+  <button class="corner-logo corner-logo--top-left" type="button" aria-label="Osito y osita con flores">
+    <img src="images/corazon-bubududu.png" alt="Osito y osita con flores" width="944" height="652" data-mover="logo-superior-izquierda">
+  </button>
+  <button class="corner-logo corner-logo--bottom-right" type="button" aria-label="Kuromi y My Melody">
+    <img src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435" data-mover="logo-inferior-derecha">
+  </button>
+
+  <!-- ===== PORTADA ===== -->
+  <header class="hero">
+    <div class="imagenes-libres">
+      <img class="img-libre" src="images/tiara-bailando.gif" alt="Osito bailando" width="200" height="229" data-mover="hero-sticker">
+    </div>
+
+    <p class="hero__kicker">21 de septiembre</p>
+    <h1 class="hero__title">Feliz Día de la<br>Primavera, Tiara</h1>
+    <p class="hero__subtitle">Un ratito para parar, mirar las flores nuevas y acordarme de todo lo que me gusta de vos.</p>
+
+      <path d="M10 45 C 80 10, 240 10, 310 45" stroke="#e0578f" stroke-width="1.4" opacity="0.5" fill="none"/>
+  </header>
+
+  <!-- ===== CARTA ===== -->
+  <section class="letter-section" id="carta">
+    <div class="wrap wrap--narrow">
+
+      <!-- APARTADO DE IMÁGENES de esta sección (ver nota completa en el hero, arriba) -->
+      <div class="imagenes-libres">
+        <img class="img-libre carta__sticker" src="images/mocha-romantico.gif" alt="Osito con flores" width="300" height="300" loading="lazy" data-mover="carta-sticker">
+      </div>
+
+      <h2 class="section-title">Te escribí algo</h2>
+      <p class="section-lede">Tocá el sobre para abrirlo.</p>
+
+      <button class="envelope" id="envelope-btn" type="button" aria-expanded="false" aria-controls="letter-box">
+        <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="30" width="200" height="120" rx="6" fill="#241521" stroke="#e0578f" stroke-width="2"/>
+          <path d="M14 34 L110 108 L206 34" fill="none" stroke="#e0578f" stroke-width="2" stroke-linejoin="round"/>
+          <g transform="translate(0,8)">
+          <circle fill="#3a2233" stroke="#e0578f" stroke-width="1.5" cx="110" r="15" cy="93"></circle>
+            <path d="M110 88 c-4 -6 -13 -3 -12 4 c1 6 12 12 12 12 s11 -6 12 -12 c1 -7 -8 -10 -12 -4 z" fill="#e0578f"/>
+          </g>
+        </svg>
+      </button>
+      <p class="envelope__caption">abrir la cartita</p>
+      <div class="letter-stage" id="letter-box">
+        <div class="letter">
+          <p class="letter__text">Tiara,
+
+            Empezó la primavera y no se me ocurre mejor excusa para decirte todo esto.
+
+            Escribí acá lo que quieras contarle: por qué la elegiste, qué te hace sonreír de ella, algún recuerdo lindo de los últimos meses, o simplemente cómo te gustaría que fuera este día para los dos.
+
+            Cambiá este texto por el tuyo, que sea con tus palabras.</p>
+          <p class="letter__signoff">— Con todo mi cariño, Euge</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section" id="momentos">
+    <div class="wrap">
+
+      <div class="imagenes-libres">
+        <img class="img-libre gallery__sticker" src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435" loading="lazy" data-mover="gallery-sticker">
+      </div>
+
+      <h2 class="section-title">Algunos momentos</h2>
+      <p class="section-lede">Poné acá las fotos que más te gustan de nosotros.</p>
+    </div>
+
+    <div class="polaroid-field">
+      <figure class="polaroid">
+        <div class="polaroid__frame">
+          <img src="images/foto1.jpg" alt="Ese día en el parque" loading="lazy" data-mover="polaroid-1">
+        </div>
+        <figcaption class="polaroid__caption">Ese día en el parque</figcaption>
+      </figure>
+
+      <figure class="polaroid">
+        <div class="polaroid__frame">
+          <img src="images/foto2.jpg" alt="Nuestra primera cita" loading="lazy" data-mover="polaroid-2">
+        </div>
+        <figcaption class="polaroid__caption">Nuestra primera cita</figcaption>
+      </figure>
+
+      <figure class="polaroid">
+        <div class="polaroid__frame">
+          <img src="images/foto3.jpg" alt="Un domingo cualquiera" loading="lazy" data-mover="polaroid-3">
+        </div>
+        <figcaption class="polaroid__caption">Un domingo cualquiera</figcaption>
+      </figure>
+
+      <figure class="polaroid">
+        <div class="polaroid__frame">
+          <img src="images/foto4.jpg" alt="Mi favorita" loading="lazy" data-mover="polaroid-4">
+        </div>
+        <figcaption class="polaroid__caption">Mi favorita</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== FLORES AMARILLAS ===== -->
+  <section class="yellow-section" id="flores-amarillas">
+    <div class="wrap">
+      <h2 class="section-title section-title--yellow">Tus flores amarillas</h2>
+      <!-- Las margaritas de esta fila las dibuja script.js (ver "Margaritas") -->
+      <div class="bouquet-row" id="bouquet-row"></div>
+      <div class="yellow-note">
+        <p>Sé que las amarillas son tus favoritas, así que esta sección es toda tuya.
+
+        Contá acá por qué te gustan, o dejá un lugar y una fecha para ir a buscarlas juntos este finde.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PIE DE PÁGINA ===== -->
+  <footer>
+
+    <svg class="footer__flourish" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 15 C40 0, 80 0, 115 15" stroke="#e0578f" stroke-width="1.2" fill="none" opacity="0.6"/>
+    </svg>
+
+    <!-- APARTADO DE IMÁGENES de esta sección (ver nota completa en el hero, arriba) -->
+    <div class="imagenes-libres">
+      <img class="img-libre footer__sticker" src="images/mi-osita.gif" alt="Osito leyendo con osita" width="370" height="300" loading="lazy" data-mover="footer-sticker">
+    </div>
+
+    <p class="footer__from">Con cariño, Euge</p>
+    <p class="footer__date">21 de septiembre — Día de la Primavera</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="editor-posiciones.js"></script>
+</body>
+</html>

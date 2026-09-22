@@ -1,0 +1,647 @@
+/*
+  Paleta de colores. Todo el archivo usa estas variables,
+  así que si querés probar otros tonos, solo cambiás acá.
+*/
+:root {
+  --bg: #150c12;           /* fondo principal, casi negro con un toque de vino */
+  --bg-panel: #1f131b;     /* fondo de tarjetas y recuadros */
+  --bg-panel-2: #2a1a24;   /* un poco más claro, para el sobre y detalles */
+
+  --rose: #e0578f;         /* rosa fuerte, para títulos y acentos */
+  --rose-soft: #f4a9c6;    /* rosa suave (nubes, textos secundarios con rosa) */
+  --rose-line: rgba(224, 87, 143, 0.25);
+  --rose-glow: rgba(224, 87, 143, 0.55);
+
+  --yellow: #f4c542;       /* amarillo de las flores */
+  --yellow-soft: #ffe9ad;
+
+  --text: #f6ecf1;         /* texto principal, blanco cálido */
+  --text-soft: #c9a8bb;    /* texto secundario, un poco apagado */
+
+  --sombra: 0 18px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+h1, h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: var(--rose);
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* .wrap: centra el contenido y le pone un ancho máximo, para que el
+   texto no se estire de punta a punta en pantallas grandes.
+   .wrap--narrow es una variante más angosta y centrada (la usa la carta). */
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wrap--narrow {
+  max-width: 560px;
+  text-align: center;
+}
+
+/* .section-title / .section-lede: el título y la bajada que se repiten
+   arriba de cada sección, para que todas empiecen igual. */
+.section-title {
+  text-align: center;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  margin-bottom: 14px;
+}
+
+.section-title--yellow {
+  color: var(--yellow);
+}
+
+.section-lede {
+  text-align: center;
+  max-width: 48ch;
+  margin: 0 auto 56px;
+  color: var(--text-soft);
+}
+
+section {
+  padding: 96px 0;
+}
+
+
+/* ============================================================
+   APARTADO DE IMÁGENES LIBRES
+   Contenedor genérico para agregar imágenes sueltas (stickers,
+   fotos, lo que sea) cerca del título de cada sección, sin tener
+   que tocar ningún otro archivo.
+
+   Usa "display: contents": el <div class="imagenes-libres"> no
+   dibuja ninguna caja propia, así que cada <img class="img-libre">
+   de adentro pasa a comportarse como un hijo más, directo, del
+   bloque que lo contiene (el <header>, el <div class="wrap">, el
+   <footer>...) y ocupa su lugar en el flujo normal de la página,
+   como cualquier otro elemento.
+
+   Eso resuelve, a la vez, las dos cosas que tenía que cumplir:
+
+     1. SIGUE SIENDO UN APARTADO 100% APARTE Y OPCIONAL: para
+        borrar una imagen (o la sección entera), alcanza con
+        borrar su <div class="imagenes-libres">...</div> del
+        HTML. El resto de la página se reacomoda solo, sin dejar
+        huecos ni necesitar ajustar nada más a mano.
+     2. NUNCA SE SUPERPONE AL TEXTO: al reservar su propio espacio
+        en el flujo (en vez de "flotar" con position:absolute y
+        coordenadas fijas en píxeles), el título y el texto de al
+        lado siempre se acomodan alrededor de la imagen — sin
+        importar el ancho de pantalla, el zoom del navegador ni
+        cuánto texto haya. Antes, esas coordenadas fijas asumían
+        una sola resolución; apenas el texto ocupaba más o menos
+        alto que eso, la imagen quedaba pisándolo.
+
+   El tamaño usa clamp() en vez de un píxel fijo, así la imagen
+   se achica o agranda en proporción a la pantalla, en lugar de
+   quedar siempre igual de grande en un celular que en un monitor.
+   Queda centrada y "anclada" arriba del título con un simple
+   margin: 0 auto, como una imagen más del diseño (no como un
+   elemento suelto pegado encima).
+
+   Para el ajuste fino a mano seguís teniendo el editor de
+   imágenes (ver editor-posiciones.js): lo que muevas ahí se
+   guarda como un "transform" que se suma arriba de esta posición
+   base, nunca la reemplaza — por eso la imagen no pierde su
+   anclaje aunque la reacomodes un poco.
+   ============================================================ */
+
+.imagenes-libres {
+  display: contents;
+}
+
+.img-libre {
+  display: block;
+  width: clamp(60px, 16vw, 120px);
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto 20px;
+  pointer-events: none;
+}
+
+.hero__sticker {
+  width: clamp(60px, 15vw, 84px);
+  margin-bottom: 18px;
+}
+
+.carta__sticker {
+  width: clamp(64px, 16vw, 90px);
+  margin-bottom: 22px;
+}
+
+.gallery__sticker {
+  width: clamp(70px, 17vw, 100px);
+  margin-bottom: 24px;
+}
+
+.footer__sticker {
+  width: clamp(66px, 16vw, 92px);
+  margin: 20px auto;
+}
+
+
+/* ============================================================
+   LOGOS DE LAS ESQUINAS
+   .corner-logo: botón fijo en una esquina de la pantalla, SIN
+   fondo ni recorte circular — se ve el PNG/gif tal cual es, con
+   su propia transparencia. El botón no tiene tamaño propio: lo
+   define la imagen de adentro. Al ser "position: fixed" tampoco
+   ocupa espacio en el documento, así que se puede mover con el
+   editor sin desacomodar nada más.
+   El ancho de la imagen usa clamp() (no un píxel fijo): así
+   ocupa siempre más o menos la misma proporción de pantalla,
+   sea celular o monitor grande, y no puede "tapar" la pantalla
+   en equipos chicos como pasaba antes con un tamaño fijo.
+   Al pasar el mouse (o tocarlo en celular) se agranda un poco, y
+   script.js le engancha un sonido propio al hacer click.
+   ============================================================ */
+
+.corner-logo {
+  position: fixed;
+  z-index: 20;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.corner-logo img {
+  width: clamp(46px, 9vw, 64px);
+  height: auto;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+}
+
+.corner-logo:hover,
+.corner-logo:focus-visible {
+  transform: scale(1.12);
+}
+
+.corner-logo:active {
+  transform: scale(1.03);
+}
+
+.corner-logo--top-left {
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: calc(14px + env(safe-area-inset-left, 0px));
+}
+
+.corner-logo--bottom-right {
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  right: calc(14px + env(safe-area-inset-right, 0px));
+}
+
+
+/* ============================================================
+   NUBES ROSADAS
+   #cloud-field es el contenedor fijo que ocupa toda la pantalla;
+   script.js le mete adentro varios .cloud (SVG) con tamaño y
+   velocidad al azar. Cada .cloud viaja de izquierda a derecha
+   gracias a la animación "nube-flotar".
+   ============================================================ */
+
+#cloud-field {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  fill: var(--rose-soft);
+  animation-name: nube-flotar;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Arranca afuera de la pantalla a la izquierda y termina afuera a la derecha */
+@keyframes nube-flotar {
+  from { transform: translateX(-45vw); }
+  to   { transform: translateX(115vw); }
+}
+
+/* ============================================================
+   PÉTALOS QUE CAEN
+   Igual que las nubes: #petal-field es el contenedor fijo y
+   script.js le agrega varios .petal. Cada pétalo cae con la
+   animación "caer" y se hamaca de lado a lado con "hamacar",
+   las dos al mismo tiempo.
+   ============================================================ */
+
+#petal-field {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -5vh;
+  width: 12px;
+  height: 12px;
+  background: var(--rose-soft);
+  border-radius: 0 60% 0 60%;
+  opacity: 0.55;
+  animation-name: caer, hamacar;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+@keyframes caer {
+  to { transform: translateY(112vh) rotate(300deg); }
+}
+
+@keyframes hamacar {
+  0%, 100% { margin-left: 0; }
+  50%      { margin-left: 40px; }
+}
+
+/* ============================================================
+   PORTADA (HERO)
+   ============================================================ */
+/* El contenido queda delante de las nubes */
+.hero > *,section > *,footer > *,.imagenes-libres > * {
+  position: relative;
+  z-index: 2;
+}
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px 48px;
+  background:
+    radial-gradient(55% 45% at 18% 12%, rgba(224, 87, 143, 0.12), transparent 60%),
+    radial-gradient(50% 40% at 85% 85%, rgba(244, 197, 66, 0.10), transparent 60%),
+    var(--bg);
+}
+
+.hero__kicker {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  color: var(--rose-soft);
+  margin: 0 0 6px;
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.hero__subtitle {
+  max-width: 46ch;
+  margin: 22px auto 0;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-soft);
+}
+
+.hero__flourish {
+  width: min(320px, 70vw);
+  margin: 30px auto 0;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.scroll-hint__stem {
+  width: 1px;
+  height: 24px;
+  background: linear-gradient(var(--rose), transparent);
+  animation: crecer 2.2s ease-in-out infinite;
+}
+
+@keyframes crecer {
+  0%, 100% { height: 16px; opacity: 0.5; }
+  50%      { height: 28px; opacity: 1; }
+}
+
+
+/* ============================================================
+   CARTA
+   .envelope: el botón con el sobre en SVG. Tiene un latido
+   constante en bucle (agrandarse/achicarse un poco) y al pasar
+   el mouse se ilumina y flota hacia arriba.
+   .letter-stage: envoltorio que NUNCA desaparece del todo (por
+   eso el gif de adentro puede seguir animándose siempre, se vea
+   o no). .letter es la caja de texto que sí se abre/cierra con
+   la clase .letter--open. .letter__gif es el osito que aparece
+   flotando arriba a la derecha solo mientras la carta está
+   abierta.
+   ============================================================ */
+
+.letter-section {
+  background: var(--bg-panel);
+}
+
+.envelope {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  display: inline-block;
+
+  animation: respirar-carta 1.5s ease-in-out infinite;
+}
+
+@keyframes respirar-carta {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Al entrar el mouse: detener la respiración */
+.envelope:hover {
+  animation-play-state: paused;
+  filter: brightness(1.15) drop-shadow(0 0 8px var(--rose-glow));
+}
+
+/* SVG */
+.envelope svg {
+  width: min(230px, 60vw);
+  height: auto;
+
+  transition: transform 0.35s ease, filter 0.35s ease;
+  filter: drop-shadow(0 0 0 transparent);
+}
+
+.envelope:hover svg,
+.envelope:focus-visible svg {
+  transform: translateY(-16px);
+}
+
+.envelope__caption {
+  margin-top: 14px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--text-soft);
+}
+
+.letter-stage {
+  position: relative;
+  margin-top: 0;
+  transition: margin-top 0.7s ease;
+}
+
+.letter-stage.letter--open {
+  margin-top: 40px;
+}
+
+.letter {
+  background: var(--bg);
+  border: 1px solid var(--rose-line);
+  border-radius: 4px;
+  padding: 0 clamp(28px, 5vw, 52px);
+  text-align: left;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.7s ease, opacity 0.6s ease, padding 0.7s ease;
+}
+  
+.letter-stage.letter--open .letter {
+  max-height: 900px;
+  opacity: 1;
+  padding: clamp(28px, 5vw, 52px);
+  box-shadow: var(--sombra);
+}
+
+/* .letter__gif-wrap es un elemento hermano de .letter (no está
+   adentro), así el "overflow: hidden" de la carta cerrada nunca
+   lo recorta a 0×0. Al no perder nunca su tamaño real en pantalla,
+   el navegador sigue reproduciendo el gif de adentro todo el
+   tiempo; acá solo controlamos si se VE o no con opacidad. */
+.letter__gif-wrap {
+  position: absolute;
+  top: clamp(-30px, -7vw, -34px);
+  right: clamp(10px, 4vw, 18px);
+  width: clamp(72px, 18vw, 96px);
+  pointer-events: none;
+}
+
+.letter__gif {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(10px) rotate(-4deg);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.letter__gif--visible {
+  opacity: 1;
+  transform: translateY(0) rotate(-4deg);
+}
+
+.letter__text {
+  font-size: 1.08rem;
+  white-space: pre-line; /* respeta los saltos de línea escritos en el HTML */
+}
+
+.letter__signoff {
+  margin-top: 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  text-align: right;
+  color: var(--rose);
+}
+
+
+/* ============================================================
+   GALERÍA DE FOTOS (estilo polaroid)
+   .polaroid: cada foto con su marco. Los nth-child alternan el
+   ángulo de rotación para que parezcan tiradas sobre una mesa.
+   .polaroid__placeholder: aviso que muestra script.js en vez de
+   la foto, cuando el archivo todavía no existe.
+   ============================================================ */
+
+.gallery-section {
+  background: var(--bg);
+}
+
+.polaroid-field {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px 22px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.polaroid {
+  background: var(--bg-panel-2);
+  padding: 14px 14px 20px;
+  width: 220px;
+  border-radius: 2px;
+  box-shadow: var(--sombra);
+}
+
+.polaroid:nth-child(odd)  { transform: rotate(-3deg); }
+.polaroid:nth-child(even) { transform: rotate(2.5deg); }
+.polaroid:nth-child(3n)   { transform: rotate(-1.5deg); }
+
+.polaroid__frame {
+  aspect-ratio: 1 / 1.05;
+  background: linear-gradient(135deg, rgba(224,87,143,0.35), rgba(244,197,66,0.25));
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.polaroid__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid__placeholder {
+  font-size: 0.72rem;
+  color: var(--text-soft);
+  text-align: center;
+  padding: 12px;
+}
+
+.polaroid__caption {
+  text-align: center;
+  margin-top: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--text-soft);
+  font-size: 1rem;
+}
+
+
+/* ============================================================
+   FLORES AMARILLAS
+   ============================================================ */
+
+.yellow-section {
+  background:
+    radial-gradient(55% 50% at 50% 0%, rgba(244, 197, 66, 0.10), transparent 65%),
+    var(--bg-panel);
+}
+
+.bouquet-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(6px, 2vw, 18px);
+  margin: 8px auto 40px;
+  flex-wrap: wrap;
+}
+
+.bouquet-row svg {
+  width: clamp(56px, 9vw, 78px);
+  height: auto;
+}
+
+.yellow-note {
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid rgba(244, 197, 66, 0.2);
+  border-radius: 4px;
+  padding: clamp(26px, 5vw, 44px);
+  box-shadow: var(--sombra);
+  text-align: center;
+}
+
+.yellow-note p {
+  font-size: 1.05rem;
+  white-space: pre-line;
+}
+
+
+/* ============================================================
+   PIE DE PÁGINA
+   ============================================================ */
+
+footer {
+  position: relative;
+  text-align: center;
+  padding: 70px 24px 56px;
+  background: var(--bg);
+}
+
+.footer__flourish {
+  width: 120px;
+  margin: 0 auto 18px;
+  opacity: 0.7;
+}
+
+.footer__from {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--rose-soft);
+}
+
+.footer__date {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+
+/* ============================================================
+   DETALLES GENERALES
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  section { padding: 72px 0; }
+  .polaroid { width: 44%; min-width: 150px; }
+}
