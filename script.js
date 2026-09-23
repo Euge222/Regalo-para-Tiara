@@ -1,62 +1,48 @@
-/* ============================================================
-   SONIDO DE LOS LOGOS
-   Cada logo de esquina tiene un audio propio. Tocarlo lo reproduce
-   desde el principio, salvo que el editor de posiciones esté
-   activo (ahí el clic sirve para arrastrar, no para sonar).
-   ============================================================ */
-
+/* ================
+   SONIDO LOGOS
+   ================ */
 const sonidoLogoIzquierda = new Audio('audio/bubu_ataaata.mp3');
 const sonidoLogoDerecha = new Audio('audio/tata_lala.mp3');
-
-/**
- * Reproduce un audio desde el principio.
- * @param {HTMLAudioElement} audio
- */
+const sonidoCarta = new Audio('audio/carta.mp3');
+const cancionCarta = new Audio('audio/A Kiss on Cold Armor.mp3');
+cancionCarta.loop = true;
 function reproducirSonido(audio) {
   audio.currentTime = 0;
   audio.play().catch((error) => {
     console.warn('No se pudo reproducir el sonido', error);
   });
 }
-
-/**
- * Reproduce el audio de un logo, salvo que se esté usando el
- * editor de posiciones para arrastrarlo.
- * @param {HTMLAudioElement} audio
- */
-function alTocarLogo(audio) {
-  if (document.body.classList.contains('modo-edicion')) return;
-  reproducirSonido(audio);
-}
-
 document.querySelector('.corner-logo--top-left')
-  .addEventListener('click', () => alTocarLogo(sonidoLogoIzquierda));
-
+  .addEventListener('click', () => reproducirSonido(sonidoLogoIzquierda));
 document.querySelector('.corner-logo--bottom-right')
-  .addEventListener('click', () => alTocarLogo(sonidoLogoDerecha));
-/* ==========================
-   SOBRE / CARTA
-   Al tocar el sobre, se abre o cierra la carta.
-========================== */
-
-const botonSobre = document.getElementById('envelope-btn');
-const cajaCarta = document.getElementById('letter-box');
-
-botonSobre.addEventListener('click', () => {
-  const estaAbierta = cajaCarta.classList.toggle('letter--open');
-  botonSobre.setAttribute('aria-expanded', estaAbierta);
+  .addEventListener('click', () => reproducirSonido(sonidoLogoDerecha));
+const botonAbrirCarta = document.getElementById('envelope-btn');
+const dialogoCarta = document.getElementById('letter-dialog');
+const botonCerrarCartaSobre = document.getElementById('letter-dialog-cerrar-sobre');
+const botonCerrarCartaTexto = document.getElementById('letter-dialog-cerrar-texto');
+function abrirCarta() {
+  dialogoCarta.showModal();
+  document.body.classList.add('carta-abierta');
+  reproducirSonido(sonidoCarta);
+  reproducirSonido(cancionCarta);
+}
+function cerrarCarta() {
+  dialogoCarta.close();
+  document.body.classList.remove('carta-abierta');
+  reproducirSonido(sonidoCarta);
+  cancionCarta.pause();
+  cancionCarta.currentTime = 0;
+}
+botonAbrirCarta.addEventListener('click', abrirCarta);
+botonCerrarCartaSobre.addEventListener('click', cerrarCarta);
+botonCerrarCartaTexto.addEventListener('click', cerrarCarta);
+dialogoCarta.addEventListener('cancel', (evento) => {
+  evento.preventDefault();
+  cerrarCarta();
 });
-/*===========================================================
+/*================
    MARGARITAS
-   Dibuja una margarita amarilla en SVG por cada tamaño de la
-   lista, para la fila de flores amarillas.
-   ============================================================ */
-
-/**
- * Dibuja una margarita amarilla en SVG.
- * @param {number} tamanio ancho y alto en píxeles
- * @returns {SVGElement}
- */
+   ================ */
 function dibujarMargarita(tamanio) {
   const cantidadPetalos = 8;
   let petalos = '';
@@ -65,7 +51,6 @@ function dibujarMargarita(tamanio) {
     const angulo = (360 / cantidadPetalos) * i;
     petalos += `<ellipse cx="0" cy="-16" rx="6" ry="14" fill="#f4c542" stroke="#c98f22" stroke-width="0.6" transform="rotate(${angulo})"/>`;
   }
-
   const envoltorio = document.createElement('div');
   envoltorio.innerHTML = `
     <svg viewBox="-30 -30 60 60" width="${tamanio}" height="${tamanio}" xmlns="http://www.w3.org/2000/svg">
@@ -74,24 +59,14 @@ function dibujarMargarita(tamanio) {
     </svg>`;
   return envoltorio.firstElementChild;
 }
-
 const filaMargaritas = document.getElementById('bouquet-row');
 const TAMANIOS_MARGARITAS = [64, 78, 58, 70, 60];
 
 TAMANIOS_MARGARITAS.forEach((tamanio) => {
   filaMargaritas.appendChild(dibujarMargarita(tamanio));
 });
-
-
 /*NUBES DE FONDO*/
-
 const CANTIDAD_NUBES = 9;
-
-/**
- * Dibuja una nube en SVG, como cuatro óvalos superpuestos.
- * @param {number} ancho en píxeles (el alto se calcula a partir de este)
- * @returns {SVGElement}
- */
 function dibujarNube(ancho) {
   const alto = ancho * 0.55;
   const envoltorio = document.createElement('div');
@@ -104,12 +79,6 @@ function dibujarNube(ancho) {
     </svg>`;
   return envoltorio.firstElementChild;
 }
-
-/**
- * Agrega una nube al contenedor de fondo, con tamaño, posición y
- * velocidad al azar.
- * @param {HTMLElement} contenedor
- */
 function agregarNubeAlAzar(contenedor) {
   const ancho = 110 + Math.random() * 130;
   const duracion = 65 + Math.random() * 35;
@@ -119,43 +88,28 @@ function agregarNubeAlAzar(contenedor) {
   nube.style.animationDuration = `${duracion}s`;
   nube.style.animationDelay = `${-Math.random() * duracion}s`;
   nube.style.opacity = `${0.16 + Math.random() * 0.1}`;
-
   contenedor.appendChild(nube);
 }
-
 const contenedorNubes = document.getElementById('cloud-field');
   for (let i = 0; i < CANTIDAD_NUBES; i++) {
     agregarNubeAlAzar(contenedorNubes);
   }
-
-
-
-/* ============================================================
+/* ================
    PÉTALOS QUE CAEN
-   ============================================================ */
-
+   ================ */
 const CANTIDAD_PETALOS = 14;
-
-/**
- * Agrega un pétalo cayendo al contenedor de fondo, con posición,
- * velocidad y tamaño al azar.
- * @param {HTMLElement} contenedor
- */
 function agregarPetaloAlAzar(contenedor) {
   const duracionCaida = 9 + Math.random() * 8;
   const duracionHamaca = 3 + Math.random() * 3;
   const demora = Math.random() * 12; // para que no caigan todos juntos
-
   const petalo = document.createElement('div');
   petalo.className = 'petal';
   petalo.style.left = `${Math.random() * 100}vw`;
   petalo.style.animationDuration = `${duracionCaida}s, ${duracionHamaca}s`;
   petalo.style.animationDelay = `${demora}s, ${demora}s`;
   petalo.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
-
   contenedor.appendChild(petalo);
 }
-
 const contenedorPetalos = document.getElementById('petal-field');
 for (let i = 0; i < CANTIDAD_PETALOS; i++) {
   agregarPetaloAlAzar(contenedorPetalos);

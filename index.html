@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Feliz Día de la Primavera, Tiara — una cartita interactiva con fotos, sorpresas y flores.">
-  <title>Feliz Día de la Primavera</title>
-
+  <meta name="description" content="Feliz Primavera, Regalo para mi princesa Tiara con algunos recuerdos, una carta y sus flores.">
+  <title>Te amo Tiara</title>
   <link rel="icon" href="images/icon.png" type="image/png">
 
-  <!-- Fuentes: una para títulos (más elegante) y otra para el texto normal -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,36 +18,34 @@
   <div id="petal-field" aria-hidden="true"></div>
 
   <button class="corner-logo corner-logo--top-left" type="button" aria-label="Osito y osita con corazón">
-    <img src="images/corazon-bubududu.png" alt="Osito y osita con corazón" width="944" height="652" data-mover="logo-superior-izquierda">
+    <img src="images/us-bubududu.png" alt="Osito y osita con flores amarillas" width="944" height="652">
   </button>
   <button class="corner-logo corner-logo--bottom-right" type="button" aria-label="Kuromi y My Melody">
-    <img src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435" data-mover="logo-inferior-derecha">
+    <img src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435">
   </button>
-  <!-- ===== PORTADA ===== -->
+
   <header class="hero">
     <div class="imagenes-libres">
-      <img class="img-libre" src="images/tiara-bailando.gif" alt="Osito bailando" width="200" height="229" data-mover="hero-sticker">
+      <img class="img-libre hero__sticker" src="images/tiara-bailando.gif" alt="Osito bailando" width="200" height="229">
     </div>
 
     <p class="hero__kicker">21 de septiembre</p>
-    <h1 class="hero__title">Feliz Día de la<br>Primavera, Tiara</h1>
-    <p class="hero__subtitle">Un ratito para parar, mirar las flores nuevas y acordarme de todo lo que me gusta de vos.</p>
+    <h1 class="hero__title">Feliz Primavera<br>a mi princesa</h1>
+    <p class="hero__subtitle">De Euge para Tiara, con todo mi amor. Mereces mucho más; espero que este pequeño presente te sea grato.</p>
 
-      <path d="M10 45 C 80 10, 240 10, 310 45" stroke="#e0578f" stroke-width="1.4" opacity="0.5" fill="none"/>
   </header>
 
-  <!-- ===== CARTA ===== -->
   <section class="letter-section" id="carta">
     <div class="wrap wrap--narrow">
 
       <div class="imagenes-libres">
-        <img class="img-libre carta__sticker" src="images/mocha-romantico.gif" alt="Osito con flores" width="300" height="300" loading="lazy" data-mover="carta-sticker">
+        <img class="img-libre carta__sticker" src="images/mocha-romantico.gif" alt="Osito con flores" width="300" height="300" loading="lazy">
       </div>
 
       <h2 class="section-title">Te escribí algo</h2>
       <p class="section-lede">Tocá el sobre para abrirlo.</p>
 
-      <button class="envelope" id="envelope-btn" type="button" aria-expanded="false" aria-controls="letter-box">
+      <button class="envelope" id="envelope-btn" type="button" aria-label="Abrir la carta">
         <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
           <rect x="10" y="30" width="200" height="120" rx="6" fill="#241521" stroke="#e0578f" stroke-width="2"/>
           <path d="M14 34 L110 108 L206 34" fill="none" stroke="#e0578f" stroke-width="2" stroke-linejoin="round"/>
@@ -60,18 +56,6 @@
         </svg>
       </button>
       <p class="envelope__caption">abrir la cartita</p>
-      <div class="letter-stage" id="letter-box">
-        <div class="letter">
-          <p class="letter__text">Tiara,
-
-            Empezó la primavera y no se me ocurre mejor excusa para decirte todo esto.
-
-            Escribí acá lo que quieras contarle: por qué la elegiste, qué te hace sonreír de ella, algún recuerdo lindo de los últimos meses, o simplemente cómo te gustaría que fuera este día para los dos.
-
-            Cambiá este texto por el tuyo, que sea con tus palabras.</p>
-          <p class="letter__signoff">— Con todo mi cariño, Euge</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -79,40 +63,40 @@
     <div class="wrap">
 
       <div class="imagenes-libres">
-        <img class="img-libre gallery__sticker" src="images/sanrio-us.gif" alt="Kuromi y My Melody" width="480" height="435" loading="lazy" data-mover="gallery-sticker">
+        <img class="img-libre gallery__sticker" src="images/bubududukiwi-twitter.gif" alt="Kuromi y My Melody" width="480" height="435" loading="lazy">
       </div>
 
-      <h2 class="section-title">Algunos momentos</h2>
-      <p class="section-lede">Poné acá las fotos que más te gustan de nosotros.</p>
+      <h2 class="section-title">Nuestros recuerdos</h2>
+      <p class="section-lede">Algún día, este lugar tendrá fotos de nosotros juntos, y no solo a la distancia.</p>
     </div>
 
     <div class="polaroid-field">
       <figure class="polaroid">
         <div class="polaroid__frame">
-          <img src="images/foto1.jpg" alt="Ese día en el parque" loading="lazy" data-mover="polaroid-1">
+          <img src="images/minecraft-eugiara.png" alt="Euge y Tiara en Minecraft con un cuado de Milk y Mocha abrazados" loading="lazy">
         </div>
-        <figcaption class="polaroid__caption">Ese día en el parque</figcaption>
+        <figcaption class="polaroid__caption">Nosotros en Minecraft ♡</figcaption>
       </figure>
 
       <figure class="polaroid">
         <div class="polaroid__frame">
-          <img src="images/foto2.jpg" alt="Nuestra primera cita" loading="lazy" data-mover="polaroid-2">
+          <img src="images/eugiaraia.jpeg" alt="Nuestra primera cita" loading="lazy">
         </div>
-        <figcaption class="polaroid__caption">Nuestra primera cita</figcaption>
+        <figcaption class="polaroid__caption">Nuestro retrato en IA</figcaption>
       </figure>
 
       <figure class="polaroid">
         <div class="polaroid__frame">
-          <img src="images/foto3.jpg" alt="Un domingo cualquiera" loading="lazy" data-mover="polaroid-3">
+          <img src="images/eugiaraenboblox2cortado.jpg" alt="Jugando roblox" loading="lazy">
         </div>
-        <figcaption class="polaroid__caption">Un domingo cualquiera</figcaption>
+        <figcaption class="polaroid__caption">Nosotros en Roblox ♡</figcaption>
       </figure>
 
       <figure class="polaroid">
         <div class="polaroid__frame">
-          <img src="images/foto4.jpg" alt="Mi favorita" loading="lazy" data-mover="polaroid-4">
+          <img src="images/eugiara3-roblox.png" alt="Euge y Tiara abrazados en Roblox" loading="lazy">
         </div>
-        <figcaption class="polaroid__caption">Mi favorita</figcaption>
+        <figcaption class="polaroid__caption">Hay que hacerlo en la vida real</figcaption>
       </figure>
     </div>
   </section>
@@ -120,13 +104,15 @@
   <section class="yellow-section" id="flores-amarillas">
     <div class="wrap">
       <h2 class="section-title section-title--yellow">Tus flores amarillas</h2>
-      <!-- Las margaritas de esta fila las dibuja script.js (ver "Margaritas") -->
       <div class="bouquet-row" id="bouquet-row"></div>
       <div class="yellow-note">
-        <p>Sé que las amarillas son tus favoritas, así que esta sección es toda tuya.
-
-        Contá acá por qué te gustan, o dejá un lugar y una fecha para ir a buscarlas juntos este finde.</p>
+        <p>Te amo de corazón, mi princesa. Con vos me siento un príncipe, ya que vos sos mi bella rosa, mi florcita hermosa.
+          
+        <img class="img-libre" src="images/eugiara-principitoflor.png" alt="Bubu y Dudu el principito y la rosa" width=60% height=auto>
+        Feliz Primavera de parte de tu Novio.</p> 
+        <div class="flower-ticket letter__signoff">Ticket válido para flores amarillas · Válido por siempre</div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -137,15 +123,91 @@
       <path d="M5 15 C40 0, 80 0, 115 15" stroke="#e0578f" stroke-width="1.2" fill="none" opacity="0.6"/>
     </svg>
     <div class="imagenes-libres">
-      <img class="img-libre footer__sticker" src="images/mi-osita.gif" alt="Osito leyendo con osita" width="370" height="300" loading="lazy" data-mover="footer-sticker">
+      <img class="img-libre footer__sticker" src="images/mi-osita.gif" alt="Osito leyendo con osita" width="370" height="300" loading="lazy">
     </div>
 
-    <p class="footer__from">Con cariño, Euge</p>
-    <p class="footer__date">21 de septiembre — Día de la Primavera</p>
-
+    <p class="footer__from">Con cariño, tu Duducito Euge</p>
+    <p class="footer__date">21 de septiembre — 22 de septiembre</p>
   </footer>
 
+  <dialog class="letter-dialog" id="letter-dialog" aria-label="Tu carta">
+    <button class="envelope envelope--open" id="letter-dialog-cerrar-sobre" type="button" aria-label="Cerrar la carta">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="
+            M20 88
+            L100 16
+            L180 88
+            L180 170
+            L20 170
+            Z
+          "
+          fill="#241521"
+          stroke="#e0578f"
+          stroke-width="2"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M20 88 L100 148 L180 88"
+          fill="none"
+          stroke="#e0578f"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
+    <div class="letter-dialog__scroll">
+      <p class="letter__text">Querida Tiara,
+
+        Es la primera vez que abriré tanto mi corazón
+        y así como tu canto celestial me cautivó,
+        deseo con ansias —y es motor de mi actual acción—
+        que sea de tu disfrute esta primera carta de amor de la que soy autor:
+
+        Sabiendo que todo está determinado,
+        sabiendo que todo es causa de una acción,
+        daré gracias a la tierra que nos ha engendrado
+        porque por esa razón hoy yo puedo decir que sé
+        que conozco de cerca el verdadero amor.
+
+        Y espero puedas decir lo mismo de corazón,
+        pues es verdad que soy dueño de tu ánima como de tus lágrimas
+        y siento dentro de mi,
+        un frio remordimiento que siempre me carcomerá.
+
+        No quiero volver a fallarte,
+        prometo siempre amarte,
+        mi delicada rosa,
+        aromática embelesadora,
+
+        la más linda de todas las flores en primavera,
+        que entera entraste en mi cabeza desde la primera
+        vez que te conocí
+        y desde ese entonces no te veo salir.
+
+        Y si bien no soy buen amante, y me veo sucumbir
+        al intentar escribir un poema de excelsa y virtuosa calidad para ti,
+        juro bajo esta luna y por mi sangre,
+        que por tu felicidad eternamente velaré hasta el fin.
+
+        Y después del fin continuaré con eso mismo,
+        pues soy la singularidad,
+        y singularmente yo te gusté
+        y me gustaste más de lo que imaginé.
+
+        Lo nuestro es el horizonte de sucesos,
+        en simbiosis nuestra sangre traerá bellos momentos.
+
+        Hoy tú ya conoces cuál es mi sueño:
+        deseo los frutos de nuestro encuentro.
+      </p>
+      <p class="letter__signoff">— Con todo mi amor, Euge</p><img class="img-libre" src="images/mocha-love.gif" alt="Mocha I love you">
+
+      <button class="letter__cerrar-texto" id="letter-dialog-cerrar-texto" type="button">cerrar carta</button>
+    </div>
+  </dialog>
+
   <script src="script.js"></script>
-  <script src="editor-posiciones.js"></script>
 </body>
 </html>
